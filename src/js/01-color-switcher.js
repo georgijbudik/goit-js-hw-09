@@ -13,13 +13,13 @@ stopBtnEl.disabled = true;
 const onStartClick = () => {
   startBtnEl.disabled = true;
   stopBtnEl.disabled = false;
-  timerId = setInterval(bodyColorChange, 1000);
+  intervalId = setInterval(bodyColorChange, 1000);
 };
 
 const onStopClick = () => {
   startBtnEl.disabled = false;
   stopBtnEl.disabled = true;
-  clearInterval(timerId);
+  clearInterval(intervalId);
 };
 
 const bodyColorChange = () => {
