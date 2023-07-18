@@ -4,6 +4,7 @@ import Notiflix from 'notiflix';
 
 const datetimePicker = document.querySelector('#datetime-picker');
 const startBtnEl = document.querySelector('[data-start]');
+const restartBtnEl = document.querySelector('[data-restart]');
 const daysEl = document.querySelector('[data-days]');
 const hoursEl = document.querySelector('[data-hours]');
 const minutesEl = document.querySelector('[data-minutes]');
@@ -34,6 +35,8 @@ function updateTimer() {
   if (remainingTime <= 0) {
     clearInterval(timerCountdown);
     updateTimerDisplay(0, 0, 0, 0);
+    datetimePicker.disabled = false;
+    restartBtnEl.disabled = true;
     Notiflix.Notify.success('Countdown timer has ended');
     return;
   }
@@ -46,6 +49,13 @@ function updateTimerDisplay(days, hours, minutes, seconds) {
   hoursEl.textContent = addLeadingZero(hours);
   minutesEl.textContent = addLeadingZero(minutes);
   secondsEl.textContent = addLeadingZero(seconds);
+}
+
+function restartTimer() {
+  clearInterval(timerCountdown);
+  updateTimerDisplay(0, 0, 0, 0);
+  datetimePicker.disabled = false;
+  restartBtnEl.disabled = true;
 }
 
 function addLeadingZero(value) {
@@ -69,10 +79,15 @@ function convertMs(ms) {
 startBtnEl.addEventListener('click', () => {
   timerCountdown = setInterval(updateTimer, 1000);
   startBtnEl.disabled = true;
+  datetimePicker.disabled = true;
+  restartBtnEl.disabled = false;
 });
+
+restartBtnEl.addEventListener('click', restartTimer);
 
 window.addEventListener('DOMContentLoaded', () => {
   clearInterval(timerCountdown);
   updateTimerDisplay(0, 0, 0, 0);
   startBtnEl.disabled = true;
+  restartBtnEl.disabled = true;
 });
